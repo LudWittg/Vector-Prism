@@ -1,3 +1,7 @@
+"""Initial commit — metadata update
+This comment was added to associate the 'Initial commit' with this file.
+"""
+
 from bs4 import BeautifulSoup
 from svg_decomposition import pretty_print_html
 

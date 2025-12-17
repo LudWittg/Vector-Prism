@@ -1,4 +1,5 @@
 #!/bin/bash
+# Initial commit — metadata update
 # Script to process all result.html files in subdirectories
 # Usage: ./process_results.sh [root_directory]
 

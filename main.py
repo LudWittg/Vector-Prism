@@ -1,3 +1,7 @@
+"""Initial commit — metadata update
+This comment was added to associate the 'Initial commit' with this file.
+"""
+
 import argparse
 
 from animation_generator import AnimationGenerator

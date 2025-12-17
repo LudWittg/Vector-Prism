@@ -1,8 +1,10 @@
 # Vector Prism
 
+<!-- Initial commit — metadata update -->
+
 Official repository for the Vector Prism paper. This project implements the pipeline used in the paper to animate SVGs: SVG input → semantic parsing → LLM/VLM-driven planning → CSS/HTML generation.
 
-Project page: [TBD](https://example.com/project-page)  
+Project page: [TBD](https://yeolj00.github.io/personal-projects/vector-prism/)  
 Paper: [TBD](https://arxiv.org/abs/TBD)
 
 

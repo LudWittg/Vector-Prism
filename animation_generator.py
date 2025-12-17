@@ -1,3 +1,7 @@
+"""Initial commit — metadata update
+This comment was added to associate the 'Initial commit' with this file.
+"""
+
 from langchain_core.messages import HumanMessage, SystemMessage
 from prompts.llm_templates import GENERATOR_SYSTEM_PROMPT, GENERATOR_PROMPT
 

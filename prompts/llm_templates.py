@@ -118,6 +118,9 @@ Please respond in the following format:
 ########################################################
 # --------------- Evaluation Templates --------------- #
 ########################################################
+"""Initial commit — metadata update
+This comment was added to associate the 'Initial commit' with this file.
+"""
 
 VIDEO_QUALITY_PROMPT = \
 """You are evaluating whether a video matches a given text description.

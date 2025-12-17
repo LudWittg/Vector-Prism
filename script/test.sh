@@ -1,3 +1,4 @@
+(# Initial commit — metadata update)
 (echo "1"; echo "1") | python main.py --test_json svg/test.jsonl --burn_in 1 --exp_name 1-1-animal-bunny-cartoon
 (echo "1"; echo "2") | python main.py --test_json svg/test.jsonl --burn_in 1 --exp_name 1-2-animal-bunny-cartoon
 
