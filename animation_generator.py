@@ -22,8 +22,8 @@ class AnimationGenerator:
         )
 
         image_payload = [
-            {'type': 'image_url', 'image_url': {"url": f"data:image/jpeg;base64,{content['big_picture']}"}},
-            {'type': 'image_url', 'image_url': {"url": f"data:image/jpeg;base64,{content['little_picture']}"}},
+            {'type': 'image_url', 'image_url': {"url": f"data:image/png;base64,{content['big_picture']}"}},
+            {'type': 'image_url', 'image_url': {"url": f"data:image/png;base64,{content['little_picture']}"}},
         ]
 
         chat_prompt = [

@@ -124,8 +124,8 @@ class SVGParser:
             SystemMessage(content=self.system_template),
             HumanMessage(content=[
                 {'type': 'text', 'text': formatted_prompt},
-                {'type': 'image_url', 'image_url': {"url": f"data:image/jpeg;base64,{self.full_svg_base64}"}},
-                {'type': 'image_url', 'image_url': {"url": f"data:image/jpeg;base64,{highlighted_svg_base64}"}},
+                {'type': 'image_url', 'image_url': {"url": f"data:image/png;base64,{self.full_svg_base64}"}},
+                {'type': 'image_url', 'image_url': {"url": f"data:image/png;base64,{highlighted_svg_base64}"}},
             ])
         ]
         
@@ -346,8 +346,8 @@ class SingleSVGParser(SVGParser):
             SystemMessage(content=self.system_template),
             HumanMessage(content=[
                 {'type': 'text', 'text': formatted_prompt},
-                {'type': 'image_url', 'image_url': {"url": f"data:image/jpeg;base64,{self.full_svg_base64}"}},
-                {'type': 'image_url', 'image_url': {"url": f"data:image/jpeg;base64,{highlighted_svg_base64}"}},
+                {'type': 'image_url', 'image_url': {"url": f"data:image/png;base64,{self.full_svg_base64}"}},
+                {'type': 'image_url', 'image_url': {"url": f"data:image/png;base64,{highlighted_svg_base64}"}},
             ])
         ]
         response = self.vlm.invoke(messages)
@@ -422,8 +422,8 @@ class MultiSVGParser(SVGParser):
             SystemMessage(content=self.system_template),
             HumanMessage(content=[
                 {'type': 'text', 'text': formatted_prompt},
-                {'type': 'image_url', 'image_url': {"url": f"data:image/jpeg;base64,{self.full_svg_base64}"}},
-                {'type': 'image_url', 'image_url': {"url": f"data:image/jpeg;base64,{highlighted_svg_base64}"}},
+                {'type': 'image_url', 'image_url': {"url": f"data:image/png;base64,{self.full_svg_base64}"}},
+                {'type': 'image_url', 'image_url': {"url": f"data:image/png;base64,{highlighted_svg_base64}"}},
             ])
         ]
         

@@ -79,12 +79,14 @@ class AnimationPlanner:
                 return animation_plans
 
         self.logger.info(f"[AnimationPlanner] Planning animation for instruction:\n{instruction}")
+        print(f"\n[AnimationPlanner] Planning animation...")
+        print(f"  Instruction: {instruction[:80]}...")
         self.set_svg_file(svg_file)
 
         formatted_prompt = self.animation_prompt_template.format(
             instruction=instruction
         )
-        image_payload = [{'type': 'image_url', 'image_url': {"url": f"data:image/jpeg;base64,{self.base64_svg}"}},]
+        image_payload = [{'type': 'image_url', 'image_url': {"url": f"data:image/png;base64,{self.base64_svg}"}},]
         chat_prompt = [
             SystemMessage(content=self.system_prompt),
             HumanMessage(content=[
@@ -93,7 +95,9 @@ class AnimationPlanner:
             ])
         ]
 
+        print(f"  Sending request to LLM... (this may take a while)")
         response = self.vlm.invoke(chat_prompt)
+        print(f"  ✓ Received response from LLM")
         animation_plan_string = response.content.strip().replace('```', '').replace('json', '').strip()
         self.logger.info(f"[AnimationPlanner]\n{animation_plan_string}")
 
