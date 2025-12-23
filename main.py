@@ -22,8 +22,21 @@ def argument_parser():
     parser.add_argument('--model_name', type=str, default='gpt-5-mini', help='Model name for LLM and VLM')
     parser.add_argument('--model_provider', type=str, default='openai', help='Model provider (e.g., openai, azure)')
     parser.add_argument('--temperature', type=float, default=1.0, help='Temperature for model sampling')
+    parser.add_argument('--base_url', type=str, default=None, help='Base URL for OpenAI-compatible proxy')
+    parser.add_argument('--api_key', type=str, default=None, help='API key for the model provider or proxy')
+
+    # VLM-specific settings (for vision tasks like planning and tagging)
+    parser.add_argument('--vlm_model', type=str, default=None, help='Model name for VLM (vision tasks). Defaults to --model_name')
+    parser.add_argument('--vlm_base_url', type=str, default=None, help='Base URL for VLM. Defaults to --base_url')
+    parser.add_argument('--vlm_api_key', type=str, default=None, help='API key for VLM. Defaults to --api_key')
+
+    # LLM-specific settings (for text-only tasks)
+    parser.add_argument('--llm_model', type=str, default=None, help='Model name for LLM (text tasks). Defaults to --model_name')
+    parser.add_argument('--llm_base_url', type=str, default=None, help='Base URL for LLM. Defaults to --base_url')
+    parser.add_argument('--llm_api_key', type=str, default=None, help='API key for LLM. Defaults to --api_key')
 
     parser.add_argument('--burn_in', type=int, default=2, help='Number of burn-in iterations for SVG parser')
+    parser.add_argument('--streaming', action='store_true', help='Enable streaming mode (required by some proxies)')
     
     args = parser.parse_args()
     return args
@@ -34,8 +47,27 @@ def main(args):
     logger.info("Starting the animation generation process.")
     set_api_key()
 
-    # print("|> Initialize Models")
-    llm, vlm = get_models(args.model_name, args.model_provider, args.temperature, logger=logger)
+    # Initialize models with separate VLM/LLM configurations
+    vlm_model = args.vlm_model or args.model_name
+    vlm_base_url = args.vlm_base_url or args.base_url
+    vlm_api_key = args.vlm_api_key or args.api_key
+    
+    llm_model = args.llm_model or args.model_name
+    llm_base_url = args.llm_base_url or args.base_url
+    llm_api_key = args.llm_api_key or args.api_key
+    
+    llm, vlm = get_models(
+        vlm_model_name=vlm_model,
+        llm_model_name=llm_model,
+        model_provider=args.model_provider,
+        temperature=args.temperature,
+        vlm_base_url=vlm_base_url,
+        llm_base_url=llm_base_url,
+        vlm_api_key=vlm_api_key,
+        llm_api_key=llm_api_key,
+        streaming=args.streaming,
+        logger=logger
+    )
 
     # print("|> Load SVG File")
     svg_path, instruction = select_svg_file(args.test_json)

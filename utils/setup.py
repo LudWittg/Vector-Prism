@@ -53,12 +53,65 @@ def set_api_key():
     # os.environ["ANTHROPIC_API_KEY"] = "your_anthropic_api_key_here"
     pass
 
-def get_models(model_name='gpt-5-mini', model_provider='openai', temperature=1.0, logger=None):
-    vlm = init_chat_model(model_name, model_provider=model_provider, temperature=temperature)
-    llm = init_chat_model(model_name, model_provider=model_provider, temperature=temperature)
+def get_models(
+    vlm_model_name='gpt-4o-mini',
+    llm_model_name='gpt-4o-mini', 
+    model_provider='openai',
+    temperature=1.0,
+    vlm_base_url=None,
+    llm_base_url=None,
+    vlm_api_key=None,
+    llm_api_key=None,
+    streaming=False,
+    logger=None
+):
+    """Initialize separate LLM and VLM models.
+    
+    Args:
+        vlm_model_name: Model name for VLM (vision tasks)
+        llm_model_name: Model name for LLM (text tasks)
+        model_provider: Provider name (openai, anthropic, etc.)
+        temperature: Sampling temperature
+        vlm_base_url: Base URL for VLM (e.g., http://localhost:8081/v1)
+        llm_base_url: Base URL for LLM
+        vlm_api_key: API key for VLM
+        llm_api_key: API key for LLM
+        streaming: Enable streaming mode (required by some proxies)
+        logger: Optional logger instance
+    """
+    # Build kwargs for VLM
+    vlm_kwargs = {
+        'model_provider': model_provider,
+        'temperature': temperature,
+        'streaming': streaming,
+    }
+    if vlm_base_url:
+        vlm_kwargs['base_url'] = vlm_base_url
+    if vlm_api_key:
+        vlm_kwargs['api_key'] = vlm_api_key
+    
+    # Build kwargs for LLM
+    llm_kwargs = {
+        'model_provider': model_provider,
+        'temperature': temperature,
+        'streaming': streaming,
+    }
+    if llm_base_url:
+        llm_kwargs['base_url'] = llm_base_url
+    if llm_api_key:
+        llm_kwargs['api_key'] = llm_api_key
+    
+    vlm = init_chat_model(vlm_model_name, **vlm_kwargs)
+    llm = init_chat_model(llm_model_name, **llm_kwargs)
+    
     if logger:
-        logger.info(f"VLM: {model_provider} {model_name} @ {temperature}")
-        logger.info(f"LLM: {model_provider} {model_name} @ {temperature}")
+        vlm_url_info = f" @ {vlm_base_url}" if vlm_base_url else ""
+        llm_url_info = f" @ {llm_base_url}" if llm_base_url else ""
+        stream_info = " (streaming)" if streaming else ""
+        logger.info(f"VLM: {model_provider} {vlm_model_name} @ {temperature}{vlm_url_info}{stream_info}")
+        logger.info(f"LLM: {model_provider} {llm_model_name} @ {temperature}{llm_url_info}{stream_info}")
+        print(f"  VLM: {vlm_model_name}{vlm_url_info}{stream_info}")
+        print(f"  LLM: {llm_model_name}{llm_url_info}{stream_info}")
     return llm, vlm
 
 def setup_logging(args):
